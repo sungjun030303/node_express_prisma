@@ -13,7 +13,7 @@ datasource db {
 //add model [table]
 // field type <- mapping , attribute using db
 model User {
-  user_id  Int      @id @default(autoincrement())
+  user_id  Int      @id @default(autoincrement()) //error 時にも増えてしまう。・・TODO check this
   nickname String   @unique @db.VarChar(12)
   email    String   @db.VarChar(30)
   password String?  @db.Text

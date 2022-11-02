@@ -64,7 +64,7 @@ Applying migration `20221102023129_init`
 The following migration(s) have been created and applied from new schema changes:
 
 migrations/
-  └─ 20221102023129_init/
+  └─ 20221102023129_init/ 
     └─ migration.sql
 
 Your database is now in sync with your schema.
