@@ -47,3 +47,4 @@ https://pris.ly/d/getting-started
 ```
 .env file and schema.prisma file are created.
 
+table is called model in prisma.
