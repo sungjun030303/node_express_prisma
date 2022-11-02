@@ -48,3 +48,24 @@ https://pris.ly/d/getting-started
 .env file and schema.prisma file are created.
 
 table is called model in prisma.
+
+3  add model
+& npx prisma format
+
+npx prisma migrate dev
+```
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "prisma_test", schema "public" at "localhost:5443"
+
+✔ Enter a name for the new migration: … init
+Applying migration `20221102023129_init`
+
+The following migration(s) have been created and applied from new schema changes:
+
+migrations/
+  └─ 20221102023129_init/
+    └─ migration.sql
+
+Your database is now in sync with your schema.
+```

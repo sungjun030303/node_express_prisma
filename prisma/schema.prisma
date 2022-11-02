@@ -9,3 +9,33 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+//add model [table]
+// field type <- mapping , attribute using db
+model User {
+  user_id  Int      @id @default(autoincrement())
+  nickname String   @unique @db.VarChar(12)
+  email    String   @db.VarChar(30)
+  password String?  @db.Text
+  provider PROVIDER @default(LOCAL)
+  agree    Boolean  @db.Boolean
+
+  posts Post[] //1:n
+}
+
+enum PROVIDER {
+  LOCAL
+  KAKAO
+  NAVER
+}
+
+model Post {
+  post_id    Int      @id @default(autoincrement())
+  content    String   @db.VarChar(255)
+  thunbnail  String   @db.Text
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  author_id Int
+  author    User @relation(fields: [author_id], references: [user_id], onDelete: Cascade)
+}
