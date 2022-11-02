@@ -69,3 +69,12 @@ migrations/
 
 Your database is now in sync with your schema.
 ```
+npm i @faker-js/faker
+
+
+```
+✝  prisma/example/node_express_prisma   master±  node test
+Jan Hettinger
+silver
+```
+
