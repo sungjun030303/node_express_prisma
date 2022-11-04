@@ -2,6 +2,7 @@
 const express =require( 'express')
 const app =express();
 const { PrismaClient } =require( '@prisma/client');
+const {userResponse} = require("./vo");
 const prisma = new PrismaClient();
 
 //14 以降BODYFASERを使用しないため、固定で設定。
@@ -34,6 +35,23 @@ app.get("/", async (req,res) => {
     // return res.send("hello world!!");
 })
 
+app.get('/:id',async (req,res)=> {
+    try {
+        const user = await prisma.user.findUnique({
+            where: {
+                user_id: Number (req.params.id)
+            } ,
+            select: userResponse,
+        });
+        //delete user.password; こちらもOK
+        // javascript inner function
+        return res.status(200).json(user);
+    }catch (err){
+        console.log(err);
+        return res.status(500).json({ err });
+    }
+
+})
 app.post("/", async (req, res) => {
     try {
         const newUser = await prisma.user.create({
