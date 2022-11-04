@@ -72,6 +72,71 @@ app.post("/", async (req, res) => {
     }
 })
 
+app.patch("/", async (req, res) => {
+    try {
+        //updatemany
+        const count = await prisma.user.updateMany({
+            where: {
+                provider: "NAVER"
+            },
+            data: {
+                provider: "LOCAL"
+            },
+        })
+    return res.status(200 ).json(count);
+
+    }catch (err){
+        console.log(err);
+        return res.status(500).json({ err });
+    }
+})
+/*
+app.patch("/:id", async (req, res) => {
+    try {
+        //update
+        const count = await prisma.user.update({
+            where: {
+                user_id: Number (req.params.id)
+            },
+            data: {
+                ...req.body
+            },
+            select: userResponse,
+        })
+        return res.status(200 ).json(count);
+
+    }catch (err){
+        console.log(err);
+        return res.status(500).json({ err });
+    }
+})
+*/
+
+/**
+ * upsert is updates if existing, create if not existing.
+*/
+app.patch("/:id", async (req, res) => {
+    try {
+        //update
+        const count = await prisma.user.upsert({
+            where: {
+                user_id: Number (req.params.id)
+            },
+            update: {
+                ...req.body
+            },
+            create: {
+                ...req.body
+            }
+        })
+        return res.status(200 ).json(count);
+
+    }catch (err){
+        console.log(err);
+        return res.status(500).json({ err });
+    }
+})
+
 app.delete("/", async (req, res) => {
     try {
         const user = await prisma.user.delete({
