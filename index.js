@@ -55,4 +55,6 @@ app.delete("/", async (req, res) => {
 
 app.listen (3000, () => {
     console.log("server on 3000");
-}) 
+})
+
+module.exports = { prisma };

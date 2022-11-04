@@ -78,3 +78,39 @@ Jan Hettinger
 silver
 ```
 
+jake テストファイル生成　→
+　
+DB　model 変更
+```
+ ✝  prisma/example/node_express_prisma   master±  npx prisma format
+Prisma schema loaded from prisma/schema.prisma
+Formatted /Users/sjkim030303/opt/dev_2022/nestjs/prisma/example/node_express_prisma/prisma/schema.prisma in 21ms 🚀
+
+npx prisma migrate dev
+......
+
+ ✝  prisma/example/node_express_prisma   master±  npx prisma db push
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "prisma_test", schema "public" at "localhost:5443"
+
+⚠️ We found changes that cannot be executed:
+  • Added the required column `name` to the `User` table without a default value. There are 3 rows in this table, it is not possible to execute this step.
+✔ To apply this change we need to reset the database, do you want to continue? All data will be lost. … yes
+The PostgreSQL database "prisma_test" from "localhost:5443" was successfully reset.
+🚀  Your database is now in sync with your Prisma schema. Done in 35.60s
+✔ Generated Prisma Client (4.5.0 | library) to ./node_modules/@prisma/client in 44ms
+
+
+ ✝  prisma/example/node_express_prisma   master±  npx prisma generate   
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+
+✔ Generated Prisma Client (4.5.0 | library) to ./node_modules/@prisma/client in 43ms
+You can now start using Prisma Client in your code. Reference: https://pris.ly/d/client
+--
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient()
+--
+```
+
