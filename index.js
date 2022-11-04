@@ -9,10 +9,27 @@ app.use(express.urlencoded({extended:true}));
 //route
 app.get("/", async (req,res) => {
     try {
-        const user = await prisma.user.findMany();
-        return res.status(200).json({ user});
+        const page = req.query.page;
+        const limit = 12;//req.query.limit;
+        const offset = (page-1) * limit;
+
+        const [ users , count] = await Promise.all([
+            await prisma.user.findMany({
+                take: limit,
+                skip: offset,
+                orderBy:
+                    {
+                        user_id: 'asc'
+                    },
+            }),
+            await prisma.user.count(),
+        ]);
+        //const user = await prisma.user.findMany();
+        return res.status(200).json({ users , maxPage: Math.ceil(( count  ) / limit ) , prePageNum: Math.ceil(( offset  ) / limit )} );
+        // return res.status(200).json({page: req.query.page})
     } catch (err) {
         console.log(err);
+        return res.status(500).json({ err });
     }
     // return res.send("hello world!!");
 })
