@@ -2,6 +2,7 @@ const { faker } = require('@faker-js/faker')
 
 const { prisma } =require('./index');
 const { v4 } = require('uuid');
+const {userResponse} = require("./Vo/vo");
 //
 // console.log(faker.name.fullName());
 // console.log(faker.color.human());
@@ -33,4 +34,33 @@ async function inputUsers() {
         i++;
     }
 }
-inputUsers();
+//inputUsers();
+
+//유저 작성 후 돌릴것.
+async function inputPost() {
+    let i= 0;
+    while (i < 100) {
+        //const author_id = Math.round(Math.random() * 10014 >= 13 ? Math.round(Math.random()*10014) : 13 )
+        const author_id = i+1;
+        const user = await prisma.user.findUnique({
+            where: {
+                user_id: author_id
+            },
+            select: userResponse
+        })
+        console.log(user);
+        if (!user) {
+            continue;
+        }
+
+        const newPost = await prisma.post.create({
+            data: {
+                content: faker.lorem.paragraphs().slice( 0,254),
+                thunbnail: faker.image.imageUrl(),
+                author_id,
+            }
+        });
+        i++;
+    }
+}
+inputPost();

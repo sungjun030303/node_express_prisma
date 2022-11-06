@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const { PrismaClient } = require("@prisma/client");
-const {userResponse} = require("../vo");
+const {userResponse} = require("../Vo/vo");
 const userRouter = Router();
 const prisma = new PrismaClient();
 
@@ -34,9 +34,11 @@ userRouter.get("/", async (req,res) => {
 
 userRouter.get('/:id',async (req,res)=> {
     try {
+        const id = req.params.id != null ? req.params.id : '0';
+        const num_id = Number(id);
         const user = await prisma.user.findUnique({
             where: {
-                user_id: Number (req.params.id)
+                user_id: num_id
             } ,
             select: userResponse,
         });
@@ -58,6 +60,7 @@ userRouter.post("/", async (req, res) => {
                     password: req.body.password,
                     provider: req.body.provider,
                     agree: req.body.agree ==='false' || req.body.agree === "0" ? false : true,
+                    name: req.body.name
                 },
             }
         );
