@@ -25,7 +25,7 @@ postRouter.get('/', async (req, res) => {
           select : {
               post_id : true,
               content    : true,
-              thunbnail  : true,
+              thumbnail  : true,
               author : {
                   select : {
                       user_id: true,
@@ -43,5 +43,68 @@ postRouter.get('/', async (req, res) => {
       return res.status(500).send(err);}
 }
 );
+
+postRouter.post("/like", async (req, res)=>{
+    try {
+        const newLike = await prisma.like.create({
+                data: {
+                    author_id: Number(req.body.author_id),
+                    post_id: Number(req.body.post_id),
+                },
+            }
+        );
+        return res.status(200).json(newLike);
+
+    } catch (err){
+
+        console.log(err);
+        return res.status(500).send(err);
+
+    }
+})
+
+postRouter.get("/like/:id", async (req, res)=>{
+    try {
+        const like = await prisma.like.findMany({
+            where : {
+                author_id: Number(req.params.id),
+            },
+            // include : {
+            //     post : true,
+            //     author: true,
+            // }
+            select : {
+                post : {
+                    select: {
+                        post_id: true,
+                        content: true,
+                        author : {
+                            select : {
+                                user_id: true,
+                                nickname: true,
+                                email: true,
+                            }
+                        }
+                    }
+                },
+                author : {
+                    select: {
+                        user_id: true,
+                        nickname: true,
+                        email: true,
+                    }
+                }
+            }
+        }
+    );
+        return res.status(200).json(like);
+    }catch (err) {
+        console.log(err);
+        return res.status(500).send(err);
+    }
+})
+
+
+
 
 module.exports =  postRouter ;

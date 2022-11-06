@@ -22,6 +22,7 @@ model User {
   agree    Boolean? @db.Boolean
 
   posts Post[] //1:n
+  Like  Like[]
 }
 
 enum PROVIDER {
@@ -33,10 +34,21 @@ enum PROVIDER {
 model Post {
   post_id    Int      @id @default(autoincrement())
   content    String   @db.VarChar(255)
-  thunbnail  String   @db.Text
+  thumbnail  String   @db.Text
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
   author_id Int
-  author    User @relation(fields: [author_id], references: [user_id], onDelete: Cascade)
+  author    User   @relation(fields: [author_id], references: [user_id], onDelete: Cascade)
+  Like      Like[]
+}
+
+model Like {
+  author_id Int
+  post_id   Int
+
+  author User @relation(fields: [author_id], references: [user_id], onDelete: Cascade)
+  post   Post @relation(fields: [post_id], references: [post_id], onDelete: Cascade)
+
+  @@id([author_id, post_id])
 }

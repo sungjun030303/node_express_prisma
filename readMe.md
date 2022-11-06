@@ -114,3 +114,10 @@ const prisma = new PrismaClient()
 --
 ```
 
+... add git history...
+
+add table like.
+npx prisma format
+npx prisma migrate dev
+
+중간에 컬럼 변경이 있을 경우 데이터가 다 날아가므로 주의할것.

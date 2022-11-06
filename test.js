@@ -56,11 +56,11 @@ async function inputPost() {
         const newPost = await prisma.post.create({
             data: {
                 content: faker.lorem.paragraphs().slice( 0,254),
-                thunbnail: faker.image.imageUrl(),
+                thumbnail: faker.image.imageUrl(),
                 author_id,
             }
         });
         i++;
     }
 }
-inputPost();
+//inputPost();
