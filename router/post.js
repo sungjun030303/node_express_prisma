@@ -14,7 +14,28 @@ postRouter.get('/', async (req, res) => {
           orderBy: {
               post_id : 'desc'
           },
-          select : postResponse
+          // include : {
+          //     author : {
+          //         select : {
+          //             user_id : true,
+          //             nickname : true,
+          //         },
+          //     }
+          // },
+          select : {
+              post_id : true,
+              content    : true,
+              thunbnail  : true,
+              author : {
+                  select : {
+                      user_id: true,
+                      nickname: true,
+                      email: true,
+                  },
+              },
+          },
+          // select : postResponse ,
+          // include :内部に定義する必要あり。
       });
       return res.status(200).json( posts )
   }catch (err) {
