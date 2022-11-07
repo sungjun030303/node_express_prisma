@@ -21,6 +21,47 @@ tagRouter.get('/', async (req, res) => {
     }
 })
 
+tagRouter.get('/agr', async (req, res) => {
+    try {
+        const tags = await prisma.tag.aggregate({
+            _count: true,
+            _avg: {
+                posts: true,
+            },
+            _sum: {
+                posts: true,
+            },
+            _min:{
+                posts: true,
+            },
+            _max: {
+                posts: true,
+            }
+        })
+        return res.status(200 ).json({tags})
+    }catch (err) {
+        console.log(err)
+        return res.status(500).json({error: err});
+    }
+})
+
+tagRouter.get('/dis', async (req, res) => {
+    try {
+        const tags = await prisma.tag.findMany({
+            orderBy: {
+                tag_id: 'desc',
+            },
+            distinct:["content"], // 중복 제거 용.
+        });
+        return res.status(200 ).json({tags});
+    }catch (err) {
+        console.log(err);
+        return res.status(500).json({error: err});
+    }
+
+})
+
+
 
 tagRouter.post('/', async (req, res) => {
     try {

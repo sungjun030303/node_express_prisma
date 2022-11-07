@@ -67,16 +67,24 @@ async function inputPost() {
 
 
 async function inputTages() {
-
+    const content = ["ootd","맞집","뷰","한강","행복","맞팔"];
     try{
-        let i = 0;
-        while (i < 100) {
-            const newTag = await prisma.tag.create({
+        let i = 347;
+        while ( i < 700 ) {
+            // const newTag = await prisma.tag.create({
+            //     data: {
+            //         content: content[ i % 6],
+            //         //content: faker.random.word().slice( 7),
+            //     }
+            // });
+            await prisma.tag.update({
+                where: {
+                    tag_id: i + 1
+                },
                 data: {
-                    content: faker.random.word().slice( 7),
-                }
+                    posts: Math.round(Math.random() *100) ,
+                },
             })
-            console.log(newTag);
             i++;
         }
 
@@ -87,4 +95,4 @@ async function inputTages() {
 
 }
 
-//inputTages() ;
+inputTages() ;
