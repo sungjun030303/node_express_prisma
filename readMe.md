@@ -121,3 +121,27 @@ npx prisma format
 npx prisma migrate dev
 
 중간에 컬럼 변경이 있을 경우 데이터가 다 날아가므로 주의할것.
+
+---
+model tags
+```
+✝  prisma/example/node_express_prisma   master±  npx prisma db push
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "prisma_test", schema "public" at "localhost:5443"
+
+🚀  Your database is now in sync with your Prisma schema. Done in 287ms
+
+✔ Generated Prisma Client (4.5.0 | library) to ./node_modules/@prisma/client in 48ms
+
+✝  prisma/example/node_express_prisma   master±  npx prisma generate
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+
+✔ Generated Prisma Client (4.5.0 | library) to ./node_modules/@prisma/client in 49ms
+You can now start using Prisma Client in your code. Reference: https://pris.ly/d/client
+
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient()
+```
+npx prisma migrate dev 이걸 했더니 디비가 몽창 다시 지워졌다.. -_-...

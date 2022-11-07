@@ -4,13 +4,15 @@ const app = express();
 const { PrismaClient } =require( '@prisma/client');
 
 const userRouter = require("./router/user");
-const postRouter = require("./router/post")
+const postRouter = require("./router/post");
+const tagRouter = require("./router/tag");
 const prisma = new PrismaClient();
 
 //route
 //14 以降BODYFASERを使用しないため、固定で設定。
 app.use(express.urlencoded({extended:true}));
 // mount the router on the app
+app.use('/tag',tagRouter);
 app.use('/post',postRouter);
 app.use('/', userRouter);
 

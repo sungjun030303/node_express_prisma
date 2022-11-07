@@ -64,3 +64,27 @@ async function inputPost() {
     }
 }
 //inputPost();
+
+
+async function inputTages() {
+
+    try{
+        let i = 0;
+        while (i < 100) {
+            const newTag = await prisma.tag.create({
+                data: {
+                    content: faker.random.word().slice( 7),
+                }
+            })
+            console.log(newTag);
+            i++;
+        }
+
+    }catch(e){
+
+        console.log(e);
+    }
+
+}
+
+//inputTages() ;
