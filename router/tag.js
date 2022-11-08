@@ -61,8 +61,39 @@ tagRouter.get('/dis', async (req, res) => {
 
 })
 
-
-
+tagRouter.get('/grb', async (req, res) => {
+    try {
+        const tags = await prisma.tag.groupBy({
+            by: ["content"],
+            _count: {
+                _all: true,
+            },
+            _sum: {
+                posts: true,
+            },
+            _avg:{
+                posts: true,
+            },
+            _min: {
+                posts: true,
+            },
+            _max: {
+                posts: true,
+            },
+            having : { //조건절.
+                posts: {
+                    _avg : {
+                        gt : 45
+                    }
+                }
+            }
+        })
+        return res.status(200 ).json({tags});
+    } catch (err) {
+    console.log(err)
+    return res.status(500).json({error: err});
+    }
+})
 tagRouter.post('/', async (req, res) => {
     try {
     } catch (err) {

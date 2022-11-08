@@ -4,6 +4,7 @@ const {postResponse} = require('../Vo/vo')
 const postRouter = Router();
 const prisma = new PrismaClient();
 
+const { faker } = require('@faker-js/faker')
 
 postRouter.get('/', async (req, res) => {
   try {
@@ -43,6 +44,28 @@ postRouter.get('/', async (req, res) => {
       return res.status(500).send(err);}
 }
 );
+
+postRouter.post("/", async (req, res) => {
+    try{
+        const newPort =await prisma.post.create({
+            data: {
+                content: faker.lorem.paragraphs().slice( 0,255),
+                thumbnail: faker.image.imageUrl(),
+                //author_id: 99,
+                author: { //既存OBJECTに連携する場合使用する。
+                    connect: { //연결을 시킴.
+                        nickname: req.body.nickname
+                    },
+                }
+            },
+
+        })
+        return res.status(200 ).json(newPort);
+    } catch ( err ) {
+        console.log( err );
+        return res.status(500).send(err);
+    }
+})
 
 postRouter.post("/like", async (req, res)=>{
     try {
